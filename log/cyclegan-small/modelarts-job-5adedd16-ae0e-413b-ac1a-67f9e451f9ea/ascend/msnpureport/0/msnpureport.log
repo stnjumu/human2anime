@@ -1,0 +1,3 @@
+Set device log level failed! req->value = SetLogLevel(0)[ERROR], req->type = 4, req->len = 21
+SET_LOGLEVEL failed, log level string=SetLogLevel(0)[ERROR], device id=1.
+The log level is empty, you can execute '--help' for example value.
