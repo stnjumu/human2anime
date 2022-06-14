@@ -17,6 +17,16 @@
 
 我只完成了基本的漫画脸功能，由于选用的漫画脸数据集是二次元风格的，所以也实现了开放性功能3
 
+## 项目文件结构介绍
+
+- ./imgs_for_README：保存用于README.md的图片
+- ./log: 华为ModelArts平台的控制台输出
+- ./output: 项目输出文件夹
+  - ./output/ckpt: 保存的训练模型
+  - ./output/imgs: 训练时输出的图片，可查看训练集生成效果
+  - ./output/log: 代码保存的日志文件
+- ./project/CycleGAN: 代码
+
 ## 算法模型选择
 
 使用[Mindspore ModelZoo](https://gitee.com/mindspore/models/tree/master)中的[CycleGAN](https://gitee.com/mindspore/models/tree/master/research/cv/CycleGAN)模型代码
