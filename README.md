@@ -2,24 +2,24 @@
 
 作者：穆朋朋
 
-使用mindspore+cyclegan完成人脸到漫画脸的转换
+使用Mindspore+CycleGAN完成人脸到漫画脸的转换
 ![漫画脸生成](./imgs_for_README/%E6%BC%AB%E7%94%BB%E8%84%B8%E7%94%9F%E6%88%90.png)
 
 ## 作业要求
 
-使用MindSpore实现基于GAN网络模型的漫画脸，输入一张图片，输出一张漫画脸，可用作手机变装，二次元
-风格等应用场景。
+使用MindSpore实现基于GAN网络模型的漫画脸，输入一张图片，输出一张漫画脸，可用作手机变装、二次元风格等应用场景。
 
 开放性的集成应用功能：
-1）基于漫画脸功能，实现染发等功能；
-2）基于漫画脸功能，实现变老、变儿童等功能；
-3）基于漫画脸功能，实现二次元风格；
 
-我只完成了基本的漫画脸功能，由于选用的漫画脸数据集是二次元风格的，所以也实现了开放性功能3)
+1. 基于漫画脸功能，实现染发等功能；
+2. 基于漫画脸功能，实现变老、变儿童等功能；
+3. 基于漫画脸功能，实现二次元风格；
+
+我只完成了基本的漫画脸功能，由于选用的漫画脸数据集是二次元风格的，所以也实现了开放性功能3
 
 ## 算法模型选择
 
-使用[mindspore ModelZoo](https://gitee.com/mindspore/models/tree/master)中的[CycleGAN](https://gitee.com/mindspore/models/tree/master/research/cv/CycleGAN)模型代码
+使用[Mindspore ModelZoo](https://gitee.com/mindspore/models/tree/master)中的[CycleGAN](https://gitee.com/mindspore/models/tree/master/research/cv/CycleGAN)模型代码
 
 人脸向漫画脸的转换是Domain Adaptation问题，或者说风格迁移问题。可以使用的[Pix2Pix](https://arxiv.org/abs/1611.07004)和[CycleGAN](https://arxiv.org/abs/1703.10593)等，但前者要求训练数据必须是成对的，而现实生活中，要找到两个域(画风)中成对出现的图片是相当困难的；后者的优势是只需要两种域的数据，而不需要他们有严格对应关系，但生成效果不是特别好。基于数据集的获取难度，我选择了CycleGAN来做此任务。
 
@@ -54,7 +54,7 @@
 1. 对每个数据集，等间隔采样得到10000张图片作为训练集，1000张图片作为测试集
 2. 对每张图片，resize到256*256大小
 
-后来在华为ModelArts平台训练时发现完成一次完整训练需要约70小时，而每小时需要约20元，由于只有500块代金券，所以无奈只能再次采样，**每个数据集的训练集只有1000张图片，测试集有100张图片**
+后来在华为ModelArts平台训练时发现完成一次完整训练需要约70小时，而每小时需要约20元，由于只有500元代金券，所以无奈只能再次采样，**每个数据集的训练集只有1000张图片，测试集有100张图片**
 
 ## 实验部分
 
@@ -67,6 +67,10 @@ Mindspore框架可以在linux+GPU平台安装使用，我参考[MindSpore安装�
 1. 登录OBS对象存储服务，创建OBS桶和文件夹；
 2. 上传数据集和上传代码: 由于网页端上传只支持单一文件，在线解压非常复杂，而且还是测试版本，无法上传下载文件夹。无奈我使用了华为提供的工具：[obsutil](https://support.huaweicloud.com/utiltg-obs/obs_11_0001.html)；根据[教程](https://support.huaweicloud.com/utiltg-obs/obs_11_0003.html)下载安装该工具并[正确设置](https://support.huaweicloud.com/utiltg-obs/obs_11_0005.html)后可以传文件夹。
 3. 在ModelArts管理控制台的训练管理-训练作业New页面，创建新的训练作业启动训练，作业的关键配置如下图所示,注意超参数设置我全部通过更改代码中的默认参数实现。![训练配置](./imgs_for_README/%E8%AE%AD%E7%BB%83%E9%85%8D%E7%BD%AE.png)
+
+训练使用一张Ascend 910(32GB)，batch_size=1, total epoch = 200，learning_rate = 0.0002，几乎所有参数都和论文中使用的一致，训练时长为7小时。
+
+加上之前试错使用的时长，总耗费代金券230元左右，没有再进行更进一步的其他实验。
 
 ## 实验结果展示
 
@@ -89,6 +93,6 @@ Mindspore框架可以在linux+GPU平台安装使用，我参考[MindSpore安装�
 
 ## 总结
 
-我只完成了基本的漫画脸功能，由于选用的漫画脸数据集是二次元风格的，所以也实现了开放性功能3)
+我只完成了基本的漫画脸功能，由于选用的漫画脸数据集是二次元风格的，所以也实现了开放性功能3
 
 总体来说，漫画脸生成效果不错，但细节部分的杂乱条纹过多，对于多变的人脸五官位置生成效果并不如意，正脸生成效果比侧脸更好一些，可能使用一些人脸相关的loss再加上人脸对齐预处理可使生成有所提高。
