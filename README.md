@@ -1,6 +1,21 @@
 # human2anime
 
+作者：穆朋朋
+
 使用mindspore+cyclegan完成人脸到漫画脸的转换
+![漫画脸生成](./imgs_for_README/%E6%BC%AB%E7%94%BB%E8%84%B8%E7%94%9F%E6%88%90.png)
+
+## 作业要求：
+
+使用MindSpore实现基于GAN网络模型的漫画脸，输入一张图片，输出一张漫画脸，可用作手机变装，二次元
+风格等应用场景。
+
+开放性的集成应用功能：
+1）基于漫画脸功能，实现染发等功能；
+2）基于漫画脸功能，实现变老、变儿童等功能；
+3）基于漫画脸功能，实现二次元风格；
+
+我只完成了基本的漫画脸功能，由于选用的漫画脸数据集是二次元风格的，所以也实现了开放性功能3)
 
 ## 算法模型选择
 
@@ -28,6 +43,7 @@
 
 对于漫画脸，我从网络中搜索到了[动漫人脸数据集](http://www.seeprettyface.com/mydataset_page3.html#anime),
 ![动漫人脸数据集概览](./imgs_for_README/anime.jpg)
+
 观察发现，动漫人脸数据集中的多为女的，男的不足1成，所以对于人脸数据集，我选择了[网红人脸数据集](http://www.seeprettyface.com/mydataset_page3.html#wanghong)
 ![网红人脸数据集概览](./imgs_for_README/wanghong.jpg)
 
@@ -50,5 +66,29 @@ Mindspore框架可以在linux+GPU平台安装使用，我参考[MindSpore安装�
 
 1. 登录OBS对象存储服务，创建OBS桶和文件夹；
 2. 上传数据集和上传代码: 由于网页端上传只支持单一文件，在线解压非常复杂，而且还是测试版本，无法上传下载文件夹。无奈我使用了华为提供的工具：[obsutil](https://support.huaweicloud.com/utiltg-obs/obs_11_0001.html)；根据[教程](https://support.huaweicloud.com/utiltg-obs/obs_11_0003.html)下载安装该工具并[正确设置](https://support.huaweicloud.com/utiltg-obs/obs_11_0005.html)后可以传文件夹。
-3. 在ModelArts管理控制台的训练管理-训练作业New页面，创建新的训练作业启动训练，作业的关键配置如下图所示：![训练配置](./imgs_for_README/%E8%AE%AD%E7%BB%83%E9%85%8D%E7%BD%AE.png)
+3. 在ModelArts管理控制台的训练管理-训练作业New页面，创建新的训练作业启动训练，作业的关键配置如下图所示,注意超参数设置我全部通过更改代码中的默认参数实现。![训练配置](./imgs_for_README/%E8%AE%AD%E7%BB%83%E9%85%8D%E7%BD%AE.png)
 
+## 实验结果展示
+
+### 成功案例
+
+生成效果整体看上去还算不错，细节部分有待提高，对于正脸的成功案例较多。
+![成功案例图1](./imgs_for_README/%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA1.png)
+![成功案例图2](./imgs_for_README/%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA2.png)
+![成功案例图3](./imgs_for_README/%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA3.png)
+
+### 失败案例
+
+失败案例主要有以下几种：
+
+1. 五官生成效果差
+2. 人脸上有头发等其他纹理特征
+3. 人脸轮廓不鲜明
+
+![失败案例图](./imgs_for_README/%E5%A4%B1%E8%B4%A5%E6%A1%88%E4%BE%8B.png)
+
+## 总结
+
+我只完成了基本的漫画脸功能，由于选用的漫画脸数据集是二次元风格的，所以也实现了开放性功能3)
+
+总体来说，漫画脸生成效果不错，但细节部分的杂乱条纹过多，对于多变的人脸五官位置生成效果并不如意，正脸生成效果比侧脸更好一些，可能使用一些人脸相关的loss再加上人脸对齐预处理可使生成有所提高。
